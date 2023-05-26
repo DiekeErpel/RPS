@@ -1,0 +1,28 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-family: poppins;
+}
+
+body {
+    background: #24a4ad;
+
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    margin: 100px;
+    border-radius: 20px;
+    background: #f4f4f4;
+    box-shadow: 5px 5px  10px black;
+    
+    width: 80%;
+    height: 200vh;
+
+
+    display: flex;
+    justify-content: center;
+}
