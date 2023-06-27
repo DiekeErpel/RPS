@@ -8,24 +8,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RPS</title>
 
-    <link rel="stylesheet" href="../CSS/Style.css">
-    <script src="../JS/Main.js"></script>
+    <link rel="stylesheet" href="../CSS/style.css">
+    <script src="../JS/main.js" defer></script>
 </head>
 <body>
     
-    <div class="container">
+    <div class="main-container">
         <div class="title">
             <h1>Rock Paper Scissors</h1>
         </div>
-        <div class="buttons">
-            <button class="Rock" onclick="playGame">Steen</button>
-            <button class="Paper" onclick="playGame">Papier</button>
-            <button class="Scissors" onclick="playGame">Schaar</button>
+
+        <div class="image">
+
+        </div>
+        <div class="button-container">
+            <button class="rock button" id="steen">Steen</button>
+            <button class="paper button" id="papier">Papier</button>
+            <button class="scissors button" id="schaar">Schaar</button>
         </div>
 
-        <div class="result" id="result"></div>
-        <div class="score" id="score"></div>
-        <button class="reset-button" onclick="resetGame()">Reset</button>
+          <div class="score" id="score"></div>
+        <button class="reset button" id="reset">Reset</button>
         
     </div>
 
