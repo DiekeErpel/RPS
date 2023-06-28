@@ -21,6 +21,8 @@
 
 body {
     background: var(--Main-BG);
+    overflow-y: hidden;
+    overflow-x: hidden;
 }
 
 
@@ -85,9 +87,11 @@ img {
 .score-reset-container {
     display: flex;
     justify-content: center;
+    align-items: center;
+    flex-direction: column;
     flex-wrap: wrap;
 
-    margin: 20px 0;
+    margin: 40px 0;
 }
 
 .score {
