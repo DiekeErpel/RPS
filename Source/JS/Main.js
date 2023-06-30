@@ -9,20 +9,19 @@ const winElement = document.getElementById("wins");
 const tieElement = document.getElementById("ties");
 const lossElement = document.getElementById("losses");
 
-// Display the wins and losses inside the HTML
-winElement.textContent = "Wins: " + wins;
-tieElement.textContent = "Ties: " + ties;
-lossElement.textContent = "Losses: " + losses;
+// Sound effects
+var winSound = new Audio('../../Assets/Sounds/Win.mp3');
+var tieSound = new Audio('../../Assets/Sounds/Tie.mp3');
+var loseSound = new Audio('../../Assets/Sounds/Lose.mp3');
 
-// Get the "Choice" elements from the HTML
-const rockElement = document.getElementById("steen");
-const paperElement = document.getElementById("papier");
-const scissorsElement = document.getElementById("schaar");
+// Update statistics in HTML
+function updateStats() {
+    winElement.textContent = "Wins: " + wins;
+    tieElement.textContent = "Ties: " + ties;
+    lossElement.textContent = "Losses: " + losses;
+}
 
-const reset = document.getElementById("reset");
-
-// Get all elements with class "button"
-var buttons = document.getElementsByClassName("button");
+updateStats(); // Call this function on page load to initialize stats
 
 // Creates the variables for the user and computer choice
 var userChoice = "";
@@ -33,101 +32,90 @@ computerChoiceElement.textContent = "Maak een keuze...";
 
 // Computer choice function
 function getComputerChoice() {
-    var choice = Math.floor(Math.random() * 3);
-    if (choice === 0) {
-        return "steen";
-    } else if (choice === 1) {
-        return "papier";
-    } else {
-        return "schaar";
-    }
+    const choices = ['rock', 'paper', 'scissors'];
+    return choices[Math.floor(Math.random() * 3)];
 }
 
 function startGame() {
     // Hide the button immediately
     document.getElementById("start").style.display = "none";
-    
-    // Start the fade out animation on the image
-    var imageElement = document.getElementById("mainImage");
-    imageElement.classList.add("fadeOut");
 
-    // After the animation ends, hide the image and display the inputs-stats-container
-    imageElement.addEventListener("animationend", function() {
-        imageElement.style.display = "none";
-        document.getElementById("inputs-stats-container").style.display = "flex";
-    }, {once: true});
+    // Get the main-container element
+    var mainContainer = document.getElementById("main-container");
+
+    // Set the background color to white
+    mainContainer.style.backgroundColor = "#ffffff";
+
+    // Remove the background image
+    mainContainer.style.backgroundImage = "none";
+
+    // Display the inputs-stats-container
+    document.getElementById("inputs-stats-container").style.display = "flex";
+}
+
+// Fade out function
+function fadeOut(sound) {
+    var fade = setInterval(function() {
+        if (sound.volume > 0.1) {
+            sound.volume -= 0.1;
+        } else {
+            clearInterval(fade);
+            sound.pause();
+            sound.currentTime = 0;
+            sound.volume = 1.0;  // Reset volume for next time
+        }
+    }, 200);  // Adjust the rate of volume decrease here (200ms intervals in this case)
 }
 
 
+const choices = document.getElementsByClassName("hand");
 
+for (var i = 0; i < choices.length; i++) {
+    choices[i].addEventListener("click", function() {
+        // Fade out any currently playing sound
+        if (!winSound.paused) fadeOut(winSound);
+        if (!loseSound.paused) fadeOut(loseSound);
+        if (!tieSound.paused) fadeOut(tieSound);
 
-// Rock Choice
-rockElement.addEventListener("click", function () {
-    userChoice = "steen";
-    computerChoice = getComputerChoice();
-    if (computerChoice === 'steen') {
-        ties++; 
-        tieElement.textContent = "Ties: " + ties;
-    } else if (computerChoice === 'papier') {
-        losses++;
-        lossElement.textContent = "Losses: " + losses;
-    } else {
-        wins++;
-        winElement.textContent = "Wins: " + wins;
-    }
-});
+        userChoice = this.id;
+        computerChoice = getComputerChoice();
 
-// Paper Choice
-paperElement.addEventListener("click", function () {
-    userChoice = "papier";
-    computerChoice = getComputerChoice();
-    if (computerChoice === 'papier') {
-        ties++;
-        tieElement.textContent = "Ties: " + ties;
-    } else if (computerChoice === 'schaar') {
-        losses++;
-        lossElement.textContent = "Losses: " + losses;
-    } else {
-        wins++;
-        winElement.textContent = "Wins: " + wins;
-    }
-});
+        // Game result
+        if (userChoice === computerChoice) {
+            ties++;
 
-// Scissors Choice
-scissorsElement.addEventListener("click", function () {
-    userChoice = "schaar";
-    computerChoice = getComputerChoice();
-    if (computerChoice === 'schaar') {
-        ties++;
-        tieElement.textContent = "Ties: " + ties;
-    } else if (computerChoice === 'steen') {
-        losses++;
-        lossElement.textContent = "Losses: " + losses;
-    } else {
-        wins++;
-        winElement.textContent = "Wins: " + wins;
-    }
-});
+            // Play the tie sound
+            tieSound.play();
+        } else if ((userChoice === 'rock' && computerChoice === 'scissors') || 
+                   (userChoice === 'paper' && computerChoice === 'rock') ||
+                   (userChoice === 'scissors' && computerChoice === 'paper')) {
+            wins++;
+            // Play the win sound
+            winSound.play();
+        } else {
+            losses++;
+            // Play the lose sound
+            loseSound.play();
+        }
+
+        updateStats();
+
+        // Display the computer's choice
+        computerChoiceElement.textContent = "AI Koos: " + computerChoice;
+
+        // Change the CSS display property of computerChoiceElement to "none"
+        document.getElementById("mainImage").style.display = "none";
+        document.getElementById("image-container").style.display = "flex";
+    });
+}
 
 
 // Wins, ties and losses reset
-reset.addEventListener("click", function () {
-    var userResponse = confirm("Weet u zeker dat u opnieuw wilt beginnen?");
-
-    if (userResponse) {
-
+document.getElementById("reset").addEventListener("click", function () {
+    if (confirm("Weet u zeker dat u opnieuw wilt beginnen?")) {
         wins = 0;
         ties = 0;
         losses = 0;
-    
-        winElement.textContent = "Wins: " + wins;
-        tieElement.textContent = "Ties: " + ties;
-        lossElement.textContent = "Losses: " + losses;
-    } else {
-        return;
+        updateStats();
     }
 });
-
-
-
-

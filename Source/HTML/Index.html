@@ -17,27 +17,19 @@
 </head>
 <body>
     
-    <div class="main-container">
-        <div class="title">
-            <h1>Rock Paper Scissors</h1>
-        </div>
+<div class="title">
+    <h1>Rock Paper Scissors</h1>
+</div>
 
-        <img id="mainImage" src="../../Assets/Images/RPS.png" alt="Kids playing rock paper scissors">
-
-        <div id="image-container">
-            <img class="hand rock" src="../../Assets/Images/rock.png" alt="ROCK">
-            <img class="hand paper" src="../../Assets/Images/paper.png" alt="PAPER">
-            <img class="hand scissors" src="../../Assets/Images/scissors.png" alt="SCISSORS">
-        </div>
-
-        <button id="start" onclick="startGame()">Start Game</button>
+    <div class="main-container" id="main-container">
+        <button id="start" onclick="startGame()">Start het spel</button>
 
         <div id="inputs-stats-container">
             <div class="button-container">
-                <button class="rock button" id="steen">Steen</button>
-                <button class="paper button" id="papier">Papier</button>
-                <button class="scissors button" id="schaar">Schaar</button>
-
+                <img class="hand" id="rock" src="../../Assets/Images/rock.png" alt="ROCK">
+                <img class="hand" id="paper" src="../../Assets/Images/paper.png" alt="PAPER">
+                <img class="hand" id="scissors" src="../../Assets/Images/scissors.png" alt="SCISSORS">
+            </div>
             <div class="score-reset-container">
                 <div class="computerChoice" id="computerChoice"></div>
                 <div class="score" id="wins">Wins: 0</div>
@@ -45,9 +37,7 @@
                 <div class="ai score" id="losses">Loss: 0</div>
                 <button class="reset button" id="reset">Reset</button>
             </div>
-        </div>
     </div>
-        
-    </div>
+</div>
 </body>
 </html>

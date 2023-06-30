@@ -8,36 +8,15 @@
 
 /* var Colors */
 :root {
-    --Main-BG: #24a4ad;
+    --Main-BG: #18294f;
     --Main-Container-BG: #f4f4f4;
-    --Main-Button-BG: #024449;
-    --Main-Button-Hover: #00545a;
+    --Main-Button-BG: #223371;
+    --Main-Button-Hover: #2c4274;
 
     --Main-Text: #fff;
     --Main-Text-Dark: #262626;
-    --Title: #002f33;
+    --Title: #d6eaec;
 }
-
-/* Keyframes with classes so they can be applied with JS */
-
-@keyframes fadeOut {
-    0% {
-        opacity: 1;
-    }
-    50% {
-        opacity: 0.5;
-    }
-    100% {
-        opacity: 0;
-    }
-}
-
-
-.fadeOut {
-    animation: fadeOut 1s linear forwards;
-}
-
-
 
 body {
     background: var(--Main-BG);
@@ -47,24 +26,29 @@ body {
 
 
 .main-container {
-    margin: 20px 5%;
+    margin: 20px 1%;
     border-radius: 20px;
-    background: var(--Main-Container-BG);
-    
-    width: 90%;
+    background: url(../../Assets/Images/RPS-BG.png);
+    height: 200px;
+    width: 98%;
     height: auto;
 
     display: flex;
     align-items: center;
     flex-direction: column;
+    justify-content: space-between;
 }
 
 .title {
-    margin-top: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
     font-size: 35px; 
-    background: -webkit-linear-gradient(var(--Title), var(--Main-BG)); 
-    -webkit-background-clip: text; 
-    -webkit-text-fill-color: transparent; 
+    text-shadow: white 0px 0px 1.5px;
+    color: var(--Main-Text);
+
+
 }
 
 img {
@@ -74,14 +58,21 @@ img {
 }
 
 /* Button to start the game */
-#start {
-    margin-bottom: 50px;
-    padding: 40px 400px 40px 400px;
+#start, .button {
+    margin: 250px 0 250px;
+    padding: 10px 15% 10px 15%;
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
     background: var(--Main-Button-BG);
     color: var(--Main-Text);
-    font-size: 2.4rem;
+    font-size: 2.9rem;
+    font-weight: 400;
     border: none;
     border-radius: 50px;
+}
+
+#start:hover {
+    cursor: pointer;
+    background: var(--Main-Button-Hover);
 }
 
 /* Container to hide buttons before game start */
@@ -95,39 +86,24 @@ img {
 }
 
 /* Image on page load */
-#mainImage {
-    margin: 50px;
-    height: 50%;
-    border-radius: 50px;
+
+.hand {
+
+    align-items: center;
+
+    margin: 20px 30 20px 30px;
+    height: 250px;
+
+    transition: ease-in-out 0.2s;
 }
 
-
-.button-container {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-
-    margin-top: 100px;
-}
-
-.button {
-    background: var(--Main-Button-BG);
-    color: var(--Main-Text);
-    font-size: 2.4rem;
-
-    padding: 10px 30px 10px 30px;
-    width: 250px;
-    margin: 2.5%;
-    border: none;
-    border-radius: 5px;
-}
-
-.button:hover {
-    background: var(--Main-Button-Hover);
-    color: var(--Main-Text);
+.hand:hover {
     cursor: pointer;
+    transform: scale(1.2);
 }
 
+
+/* Container for the score and computer choice */
 .score-reset-container {
     display: flex;
     justify-content: center;
@@ -135,7 +111,7 @@ img {
     flex-direction: column;
     flex-wrap: wrap;
 
-    margin: 40px 0;
+    margin: 40px 25px;
 }
 
 .computerChoice {
@@ -150,8 +126,21 @@ img {
     color: var(--Main-Text-Dark);
 }
 
+/* Responsive Styling */
 @media (max-width: 860px) {
     .button {
         width: 100%;
+    }
+    .score-reset-container {
+        margin-bottom: 0px;
+        height: auto;
+    }
+
+
+    #inputs-stats-container {
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: center;
+        justify-content: center;
     }
 }
