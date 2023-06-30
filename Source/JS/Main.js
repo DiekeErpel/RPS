@@ -3,6 +3,8 @@ var wins = 0;
 var ties = 0;
 var losses = 0;
 
+var sessionWins = 0; // Makes sure the current wins don't get saved into highscore after a highscore reset
+
 // Get the "Statistic" elements from the HTML
 const computerChoiceElement = document.getElementById("computerChoice");
 const winElement = document.getElementById("wins");
@@ -14,27 +16,38 @@ var winSound = new Audio('../../Assets/Sounds/Win.mp3');
 var tieSound = new Audio('../../Assets/Sounds/Tie.mp3');
 var loseSound = new Audio('../../Assets/Sounds/Lose.mp3');
 
-// Update statistics in HTML
+// On page load, set the high score input to the saved high score, if any
+updateHighScore();
+updateStats(); // Call this function on page load to initialize stats
+
 function updateStats() {
     winElement.textContent = "Wins: " + wins;
     tieElement.textContent = "Ties: " + ties;
     lossElement.textContent = "Losses: " + losses;
+
+    // Save the high score in local storage
+    var highScore = parseInt(localStorage.getItem('highScore')) || 0;
+    if (sessionWins > highScore) { // Change 'wins' to 'sessionWins' here
+        localStorage.setItem('highScore', sessionWins);
+    }
+    updateHighScore();
 }
 
-updateStats(); // Call this function on page load to initialize stats
+function updateHighScore() {
+    var highScore = parseInt(localStorage.getItem('highScore')) || 0;
+    document.getElementById("highscoreInput").textContent = "High Score: " + highScore;
 
-// Creates the variables for the user and computer choice
-var userChoice = "";
-var computerChoice = "";
+    var alertShown = localStorage.getItem('alertShown') || 'false';
 
-// Display the onload choice inside the HTML
-computerChoiceElement.textContent = "Maak een keuze...";
-
-// Computer choice function
-function getComputerChoice() {
-    const choices = ['rock', 'paper', 'scissors'];
-    return choices[Math.floor(Math.random() * 3)];
+    if (highScore === 5 && alertShown === 'false') {
+        alert("Gefeliciteerd u heeft een mijlpaal van 5 bereikt!");
+        document.getElementById("crown").style.display = "flex";
+        localStorage.setItem('alertShown', 'true');
+    }
 }
+
+
+
 
 function startGame() {
     // Hide the button immediately
@@ -68,46 +81,69 @@ function fadeOut(sound) {
 }
 
 
+// Creates the variables for the user and computer choice
+var userChoice = "";
+var computerChoice = "";
+
+// Display the onload choice inside the HTML
+computerChoiceElement.textContent = "Maak een keuze...";
+
+// Computer choice function
+function getComputerChoice() {
+    const choices = ['Steen', 'Papier', 'Schaar'];
+    return choices[Math.floor(Math.random() * 3)];
+}
 
 // Get the hand elements from the HTML
 const choices = document.getElementsByClassName("hand");
 const mainContainer = document.getElementById("main-container");
 
-
 // Gets the users input and displays the computer's choice
 for (var i = 0; i < choices.length; i++) {
     choices[i].addEventListener("click", function() {
         userChoice = this.id;
-        computerChoice = getComputerChoice();
+        computerChoice = getComputerChoice(); // Get the computer's choice
 
         // Game result
         if (userChoice === computerChoice) {
             ties++;
-            mainContainer.style.backgroundColor = "#f19b22";
-
-            // Play the tie sound
+            mainContainer.style.backgroundColor = "#f19b22"; // background color for a tie
             tieSound.play();
-        } else if ((userChoice === 'rock' && computerChoice === 'scissors') || 
-                   (userChoice === 'paper' && computerChoice === 'rock') ||
-                   (userChoice === 'scissors' && computerChoice === 'paper')) {
+        } else if ((userChoice === 'Steen' && computerChoice === 'Schaar') || 
+        (userChoice === 'Papier' && computerChoice === 'Steen') ||
+        (userChoice === 'Schaar' && computerChoice === 'Papier')) {
             wins++;
-            mainContainer.style.backgroundColor = "#42eb0f";
-
-            // Play the win sound
+            sessionWins++;
+            mainContainer.style.backgroundColor = "#00ff00"; // background color for a win
             winSound.play();
         } else {
             losses++;
-            mainContainer.style.backgroundColor = "#ff0000";
-
-            // Play the lose sound
+            mainContainer.style.backgroundColor = "#ff0000"; // background color for a loss
             loseSound.play();
         }
 
+
         updateStats();
+
+        // Get the image element from the HTML
+        const computerChoiceImage = document.getElementById("computerChoiceImage");
+
+        // Image paths
+        const SteenImage = "../../Assets/Images/rock.png";
+        const PapierImage = "../../Assets/Images/paper.png";
+        const SchaarImage = "../../Assets/Images/scissors.png";
+
+        // Update the image source based on the computer's choice
+        if (computerChoice === 'Steen') {
+            computerChoiceImage.src = SteenImage;
+        } else if (computerChoice === 'Papier') {
+            computerChoiceImage.src = PapierImage;
+        } else if (computerChoice === 'Schaar') {
+            computerChoiceImage.src = SchaarImage;
+        }
 
         // Display the computer's choice
         computerChoiceElement.textContent = "AI Koos: " + computerChoice;
-
 
         // Reset background color after 0.5 seconds
         setTimeout(function() {
@@ -118,16 +154,48 @@ for (var i = 0; i < choices.length; i++) {
 }
 
 
-
-
-
 // Wins, ties and losses reset
 document.getElementById("reset").addEventListener("click", function () {
     if (confirm("Weet u zeker dat u opnieuw wilt beginnen?")) {
         wins = 0;
         ties = 0;
         losses = 0;
+
+        // Hide the crown
+        document.getElementById("crown").style.display = "none";
         updateStats();
+        
+        // Reset high score
+        localStorage.removeItem('highScore');
+        updateHighScore();
+
+        // Reset session wins
+        sessionWins = 0; // This line resets sessionWins without affecting the displayed total wins
+
+        // Hide the crown
+        document.getElementById("crown").style.display = "none";
+
+        // Reset alertShown flag
+        localStorage.setItem('alertShown', 'false');
+    }
+});
+
+// Highscore reset
+document.getElementById("resetHighscore").addEventListener("click", function () {
+    console.log("Resetting high score...");
+    if (confirm("Weet u zeker dat u de highscore wilt resetten?")) {
+        // Reset high score
+        localStorage.removeItem('highScore');
+        updateHighScore();
+
+        // Reset session wins
+        sessionWins = 0; // This line resets sessionWins without affecting the displayed total wins
+
+        // Hide the crown
+        document.getElementById("crown").style.display = "none";
+
+        // Reset alertShown flag
+        localStorage.setItem('alertShown', 'false');
     }
 });
 

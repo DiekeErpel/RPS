@@ -10,6 +10,7 @@
 :root {
     --Main-BG: #18294f;
     --Main-Container-BG: #f4f4f4;
+    --Container-BG-Dark: #252b38;
     --Main-Button-BG: #223371;
     --Main-Button-Hover: #2c4274;
 
@@ -18,11 +19,38 @@
     --Title: #d6eaec;
 }
 
+/* Keyframes */
+
+@keyframes bounce {
+    0%   { transform: scale(1,1); }
+    30%  { transform: scale(1.25, 0.75); }
+    50%  { transform: scale(0.75, 1.25); }
+    70%  { transform: scale(1.15, 0.85); }
+    100% { transform: scale(1,1); }
+}
+
+
+/* General Styling */
+
 body {
     background: var(--Main-BG);
     overflow-x: hidden;
 }
 
+img {
+    margin: 100px;
+    height: 90%;
+    border-radius: 50px;
+}
+
+p {
+    font-size: 4.5rem;
+    font-weight: 600;
+    color: var(--Main-Text-Dark);
+}
+
+
+/* Main Container Styling */
 .main-container {
     margin: 20px 1%;
     border-radius: 20px;
@@ -38,6 +66,7 @@ body {
     transition: background-color ease-in-out 0.125s;
 }
 
+/* Title Styling */
 .title {
     width: 100%;
     display: flex;
@@ -50,25 +79,39 @@ body {
 
 }
 
-img {
-    margin: 100px;
-    height: 90%;
-    border-radius: 50px;
+.crown {
+    display: none;
+
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    height: 100px;
+    animation: bounce 1.5s infinite;
 }
 
 /* Button to start the game */
 #start, .button {
-    margin: 250px 0 250px;
     padding: 10px 15% 10px 15%;
     background: var(--Main-Button-BG);
     color: var(--Main-Text);
-    font-size: 2.9rem;
+    font-size: 1.9rem;
     font-weight: 400;
     border: none;
     border-radius: 50px;
 }
 
-#start:hover {
+.button {
+    margin-bottom: 10px;
+}
+
+#start {
+    margin: 250px 0 250px;
+    font-size: 2.9rem;
+
+}
+
+#start:hover, .reset:hover, .resetHighscore:hover {
     cursor: pointer;
     background: var(--Main-Button-Hover);
 }
@@ -83,14 +126,12 @@ img {
     display: none;
 }
 
-/* Image on page load */
-
 .hand {
     align-items: center;
 
-    margin: 20px 30 20px 30px;
-    height: 300px;
-
+    margin: 150px 50px 300px 30px;
+    height: 280px;
+    border-radius: 50px;
     transition: ease-in-out 0.2s;
 }
 
@@ -103,24 +144,44 @@ img {
 /* Container for the score and computer choice */
 .score-reset-container {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     flex-direction: column;
     flex-wrap: wrap;
 
+    width: 400px;
+    color: var(--Main-Text);
+    background-color: var(--Container-BG-Dark);
     margin: 40px 25px;
+    padding: 20px;
+    border-radius: 15px;
 }
 
-.computerChoice {
-    font-size: 40px;
+.computerChoice, .playerStats, .highscore {
+    color: var(--Main-Text) !important;
+    font-size: 40px !important;
     font-weight: 700;
+    margin: 5px 0 5px;
+}
+
+#computerChoiceImage {
+    background: var(--Main-Container-BG);
+    color: var(--Main-Container-BG);
+
+    min-width: 100px;
+    height: 100px;
+    padding: 15px;
     margin: 5px 0 5px;
 }
 
 .score {
     font-size: 25px;
     font-weight: 600;
-    color: var(--Main-Text-Dark);
+    color: var(--Main-Text);
+}
+
+.highscore {
+    margin: 30px 0;
 }
 
 /* Responsive Styling */

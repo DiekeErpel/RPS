@@ -25,17 +25,24 @@
         <button id="start" onclick="startGame()">Start het spel</button>
 
         <div id="inputs-stats-container">
-            <div class="button-container">
-                <img class="hand" id="rock" src="../../Assets/Images/rock.png" alt="ROCK">
-                <img class="hand" id="paper" src="../../Assets/Images/paper.png" alt="PAPER">
-                <img class="hand" id="scissors" src="../../Assets/Images/scissors.png" alt="SCISSORS">
+            <div class="hand-container">
+                <p>Selecteer Uw Move:</p>
+                <img class="hand" id="Steen" src="../../Assets/Images/rock.png" alt="ROCK">
+                <img class="hand" id="Papier" src="../../Assets/Images/paper.png" alt="PAPER">
+                <img class="hand" id="Schaar" src="../../Assets/Images/scissors.png" alt="SCISSORS">
             </div>
             <div class="score-reset-container">
+                <img src="../../Assets/Images/crown.png" class="crown" id="crown">
                 <div class="computerChoice" id="computerChoice"></div>
+                <img id="computerChoiceImage">
+                <p class="playerStats">Uw Stats</p>
                 <div class="score" id="wins">Wins: 0</div>
                 <div class="score" id="ties">Ties: 0</div>
                 <div class="ai score" id="losses">Loss: 0</div>
-                <button class="reset button" id="reset">Reset</button>
+                <div class="highscore score">Uw Highscore:</div>
+                <div class=" score" id="highscoreInput"></div>
+                <button class="reset button" id="reset">Reset Alles</button>
+                <button class="resetHighscore button" id="resetHighscore">Reset Highscore</button>
             </div>
     </div>
 </div>
