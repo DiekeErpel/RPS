@@ -99,3 +99,13 @@ img {
     font-weight: 600;
     color: var(--Main-Text-Dark);
 }
+
+@media (max-width: 860px) {
+    .button {
+        width: 100%;
+    }
+
+    body {
+        overflow-y: scroll;
+    }
+}
