@@ -68,21 +68,22 @@ function fadeOut(sound) {
 }
 
 
-const choices = document.getElementsByClassName("hand");
 
+// Get the hand elements from the HTML
+const choices = document.getElementsByClassName("hand");
+const mainContainer = document.getElementById("main-container");
+
+
+// Gets the users input and displays the computer's choice
 for (var i = 0; i < choices.length; i++) {
     choices[i].addEventListener("click", function() {
-        // Fade out any currently playing sound
-        if (!winSound.paused) fadeOut(winSound);
-        if (!loseSound.paused) fadeOut(loseSound);
-        if (!tieSound.paused) fadeOut(tieSound);
-
         userChoice = this.id;
         computerChoice = getComputerChoice();
 
         // Game result
         if (userChoice === computerChoice) {
             ties++;
+            mainContainer.style.backgroundColor = "#f19b22";
 
             // Play the tie sound
             tieSound.play();
@@ -90,10 +91,14 @@ for (var i = 0; i < choices.length; i++) {
                    (userChoice === 'paper' && computerChoice === 'rock') ||
                    (userChoice === 'scissors' && computerChoice === 'paper')) {
             wins++;
+            mainContainer.style.backgroundColor = "#42eb0f";
+
             // Play the win sound
             winSound.play();
         } else {
             losses++;
+            mainContainer.style.backgroundColor = "#ff0000";
+
             // Play the lose sound
             loseSound.play();
         }
@@ -103,11 +108,17 @@ for (var i = 0; i < choices.length; i++) {
         // Display the computer's choice
         computerChoiceElement.textContent = "AI Koos: " + computerChoice;
 
-        // Change the CSS display property of computerChoiceElement to "none"
-        document.getElementById("mainImage").style.display = "none";
-        document.getElementById("image-container").style.display = "flex";
+
+        // Reset background color after 0.5 seconds
+        setTimeout(function() {
+            console.log("Resetting background color...");
+            mainContainer.style.background = 'var(--Main-Container-BG)';
+        }, 500);
     });
 }
+
+
+
 
 
 // Wins, ties and losses reset
@@ -119,3 +130,19 @@ document.getElementById("reset").addEventListener("click", function () {
         updateStats();
     }
 });
+
+
+
+const bg = document.getElementById('main-container');
+const windowWidth = window.innerWidth / 3;
+const windowHeight = window.innerHeight / 3;
+
+document.addEventListener('mousemove', (e) => {
+  const mouseX = (e.clientX - window.innerWidth / 1) / windowWidth;
+  const mouseY = (e.clientY - window.innerHeight / 1) / windowHeight;
+
+  bg.style.backgroundPosition = `${mouseX}% ${mouseY}%`;
+});
+
+// Set your background image here
+bg.style.backgroundImage = "url('../../Assets/Images/RPS-BG.png')";

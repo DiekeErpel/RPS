@@ -23,8 +23,6 @@ body {
     overflow-x: hidden;
 }
 
-
-
 .main-container {
     margin: 20px 1%;
     border-radius: 20px;
@@ -37,6 +35,7 @@ body {
     align-items: center;
     flex-direction: column;
     justify-content: space-between;
+    transition: background-color ease-in-out 0.125s;
 }
 
 .title {
@@ -61,7 +60,6 @@ img {
 #start, .button {
     margin: 250px 0 250px;
     padding: 10px 15% 10px 15%;
-    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
     background: var(--Main-Button-BG);
     color: var(--Main-Text);
     font-size: 2.9rem;
@@ -88,11 +86,10 @@ img {
 /* Image on page load */
 
 .hand {
-
     align-items: center;
 
     margin: 20px 30 20px 30px;
-    height: 250px;
+    height: 300px;
 
     transition: ease-in-out 0.2s;
 }
@@ -135,6 +132,7 @@ img {
         margin-bottom: 0px;
         height: auto;
     }
+    
 
 
     #inputs-stats-container {
